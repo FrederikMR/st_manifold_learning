@@ -154,7 +154,7 @@ def main():
 
 
         if (epoch+1) % args.save_step == 0:
-			print(f"-Saving Epoch: {epoch+1}/{epochs}")
+            print(f"-Saving Epoch: {epoch+1}/{epochs}")
             torch.save({'epoch': epoch+1,
                 'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': optimizer.state_dict(),
