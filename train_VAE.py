@@ -72,7 +72,7 @@ def main():
     epochs = args.epochs
 
     if args.model == "SVHN":
-        model = ManLearn.VAE_SVHN().to(args.device) #Model used
+        model = ManLearn.VAE_SVHN(device=args.device).to(args.device) #Model used
         data_path = ''.join((args.path, 'SVHN/'))
         model_path = ''.join((args.path, 'SVHN/params.pt'))
         dataset, dataset_subset, trainloader = ManLearn.load_svhn(data_path,
@@ -81,7 +81,7 @@ def main():
                                                                   frac=args.num_img,
                                                                   workers=args.workers)
     elif args.model == "CelebA":
-        model = ManLearn.VAE_CELEBA().to(args.device)
+        model = ManLearn.VAE_CELEBA(device=args.device).to(args.device)
         data_path = ''.join((args.path, 'CelebA/'))
         model_path = ''.join((args.path, 'CelebA/params.pt'))
         dataset, dataset_subset, trainloader = ManLearn.load_celeba(data_path,
@@ -90,7 +90,7 @@ def main():
                                                                   frac=args.num_img,
                                                                   workers=args.workers)
     elif args.model == "MNIST":
-        model = ManLearn.VAE_MNIST().to(args.device)
+        model = ManLearn.VAE_MNIST(device=args.device).to(args.device)
         data_path = ''.join((args.path, 'MNIST/'))
         model_path = ''.join((args.path, 'MNIST/params.pt'))
         dataset, dataset_subset, trainloader = ManLearn.load_mnist(data_path,
@@ -99,7 +99,7 @@ def main():
                                                                   frac=args.num_img,
                                                                   workers=args.workers)
     elif args.model == "DTU":
-        model = ManLearn.VAE_DTU().to(args.device)
+        model = ManLearn.VAE_DTU(device=args.device).to(args.device)
         data_path = ''.join((args.path, 'DTU_orbit/orbit/'))
         model_path = ''.join((args.path, 'DTU/params.pt'))
         dataset, dataset_subset, trainloader = ManLearn.load_dtu(data_path,
