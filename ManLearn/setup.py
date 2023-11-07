@@ -19,3 +19,6 @@ import torchvision.transforms as transforms
 
 #numpy
 import numpy as np
+
+#typing
+from typing import List, Any

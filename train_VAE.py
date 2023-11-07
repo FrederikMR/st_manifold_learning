@@ -74,7 +74,7 @@ def main():
     if args.model == "SVHN":
         model = ManLearn.VAE_SVHN(device=args.device).to(args.device) #Model used
         data_path = ''.join((args.path, 'SVHN/'))
-        model_path = ''.join((args.path, 'SVHN/params.pt'))
+        model_path = ''.join(('models/', 'SVHN/params.pt'))
         dataset, dataset_subset, trainloader = ManLearn.load_svhn(data_path,
                                                                   batch_size=args.batch_size,
                                                                   img_size=32,
@@ -83,7 +83,7 @@ def main():
     elif args.model == "CelebA":
         model = ManLearn.VAE_CELEBA(device=args.device).to(args.device)
         data_path = ''.join((args.path, 'CelebA/'))
-        model_path = ''.join((args.path, 'CelebA/params.pt'))
+        model_path = ''.join(('models/', 'CelebA/params.pt'))
         dataset, dataset_subset, trainloader = ManLearn.load_celeba(data_path,
                                                                   batch_size=args.batch_size,
                                                                   img_size=64,
@@ -92,7 +92,7 @@ def main():
     elif args.model == "MNIST":
         model = ManLearn.VAE_MNIST(device=args.device).to(args.device)
         data_path = ''.join((args.path, 'MNIST/'))
-        model_path = ''.join((args.path, 'MNIST/params.pt'))
+        model_path = ''.join(('models/', 'MNIST/params.pt'))
         dataset, dataset_subset, trainloader = ManLearn.load_mnist(data_path,
                                                                   batch_size=args.batch_size,
                                                                   img_size=28,
@@ -101,7 +101,7 @@ def main():
     elif args.model == "DTU":
         model = ManLearn.VAE_DTU(device=args.device).to(args.device)
         data_path = ''.join((args.path, 'DTU_orbit/orbit/'))
-        model_path = ''.join((args.path, 'DTU/params.pt'))
+        model_path = ''.join(('models/', 'DTU/params.pt'))
         dataset, dataset_subset, trainloader = ManLearn.load_dtu(data_path,
                                                                   batch_size=args.batch_size,
                                                                   img_size=64,
