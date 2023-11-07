@@ -3,4 +3,3 @@ Loaded dependency [python3/3.10.12]: sqlite3/3.42.0
 
 Switching from python3/3.8.2 to python3/3.10.12
   Loading requirement: gcc/11.4.0-binutils-2.40 sqlite3/3.42.0
-python3: can't open file '/zhome/77/8/118225/Desktop/Projects/st_manifold_learning/st_manifold_learning/train_vae.py': [Errno 2] No such file or directory

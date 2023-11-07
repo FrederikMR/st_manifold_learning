@@ -1,9 +1,9 @@
 #!/bin/sh
 #BSUB -q gpuv100
-#BSUB -J MNIST
+#BSUB -J DTU
 #BSUB -n 4
 #BSUB -R "span[hosts=1]"
-#BSUB -gpu "num=1:mode=exclusive_process"
+#BSUB -gpu "num=1"
 #BSUB -W 24:00
 #BSUB -R "rusage[mem=32GB]"
 #BSUB -u fmry@dtu.dk
@@ -19,7 +19,7 @@ module swap cudnn/v8.9.1.23-prod-cuda-12.X
 module swap python3/3.10.12
 
 python3 train_VAE.py \
-    --model MNIST \
+    --model DTU \
     --path ../../Data/ \
     --save_step 100 \
     --num_img 0.8 \
