@@ -20,5 +20,8 @@ import torchvision.transforms as transforms
 #numpy
 import numpy as np
 
+#pandas
+import pandas as pd
+
 #typing
 from typing import List, Any

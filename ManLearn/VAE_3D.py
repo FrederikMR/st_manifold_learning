@@ -159,12 +159,8 @@ class VAE_3D(nn.Module):
     def h(self, x):
         
         x_encoded = self.encoder(x)
-        mu, var = self.mu_net(x_encoded), self.var_net(x_encoded)
-        std = torch.sqrt(var)
         
-        z = self.rep_par(mu, std)
-        
-        return mu
+        return self.mu_net(x_encoded)
         
     def g(self, z):
         

@@ -15,6 +15,7 @@ https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html
 #%% Modules
 
 import torch
+from torch import nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 import torchvision.datasets as dset
@@ -30,7 +31,7 @@ import ManLearn
 def parse_args():
     parser = argparse.ArgumentParser()
     # File-paths
-    parser.add_argument('--model', default="DTU",
+    parser.add_argument('--model', default="paraboloid",
                         type=str)
     parser.add_argument('--path', default="../../../../Data/",
                         type=str)
@@ -107,6 +108,102 @@ def main():
                                                                   img_size=64,
                                                                   frac=args.num_img,
                                                                   workers=args.workers)
+    elif args.model == "R2":
+        model = ManLearn.VAE_3D(fc_h = [3, 100],
+                                fc_g = [2, 100, 3],
+                                fc_mu = [100, 2],
+                                fc_var = [100, 2],
+                                fc_h_act = [nn.GELU],
+                                fc_g_act = [nn.GELU, nn.Identity],
+                                fc_mu_act = [nn.Identity],
+                                fc_var_act = [nn.Sigmoid],
+                                device=args.device).to(args.device)
+        data_path = 'Data/R2/data.csv'
+        model_path = ''.join(('models/', 'R2/params.pt'))
+        dataset, trainloader = ManLearn.load_surface(data_path,
+                                                     batch_size=args.batch_size,
+                                                     workers=args.workers,
+                                                     device=args.device)
+    elif args.model == "CircleR2":
+        model = ManLearn.VAE_3D(fc_h = [2, 100],
+                                fc_g = [1, 100, 2],
+                                fc_mu = [100, 1],
+                                fc_var = [100, 1],
+                                fc_h_act = [nn.GELU],
+                                fc_g_act = [nn.GELU, nn.Identity],
+                                fc_mu_act = [nn.Identity],
+                                fc_var_act = [nn.Sigmoid],
+                                device=args.device).to(args.device)
+        data_path = 'Data/CircleR2/data.csv'
+        model_path = ''.join(('models/', 'CircleR2/params.pt'))
+        dataset, trainloader = ManLearn.load_surface(data_path,
+                                                     batch_size=args.batch_size,
+                                                     workers=args.workers,
+                                                     device=args.device)
+    elif args.model == "CircleR3":
+        model = ManLearn.VAE_3D(fc_h = [3, 100],
+                                fc_g = [2, 100, 3],
+                                fc_mu = [100, 2],
+                                fc_var = [100, 2],
+                                fc_h_act = [nn.GELU],
+                                fc_g_act = [nn.GELU, nn.Identity],
+                                fc_mu_act = [nn.Identity],
+                                fc_var_act = [nn.Sigmoid],
+                                device=args.device).to(args.device)
+        data_path = 'Data/CircleR3/data.csv'
+        model_path = ''.join(('models/', 'CircleR3/params.pt'))
+        dataset, trainloader = ManLearn.load_surface(data_path,
+                                                     batch_size=args.batch_size,
+                                                     workers=args.workers,
+                                                     device=args.device)
+    elif args.model == "hyperbolic_paraboloid":
+        model = ManLearn.VAE_3D(fc_h = [3, 100],
+                                fc_g = [2, 100, 3],
+                                fc_mu = [100, 2],
+                                fc_var = [100, 2],
+                                fc_h_act = [nn.GELU],
+                                fc_g_act = [nn.GELU, nn.Identity],
+                                fc_mu_act = [nn.Identity],
+                                fc_var_act = [nn.Sigmoid],
+                                device=args.device).to(args.device)
+        data_path = 'Data/hyperbolic_paraboloid/data.csv'
+        model_path = ''.join(('models/', 'hyperbolic_paraboloid/params.pt'))
+        dataset, trainloader = ManLearn.load_surface(data_path,
+                                                     batch_size=args.batch_size,
+                                                     workers=args.workers,
+                                                     device=args.device)
+    elif args.model == "paraboloid":
+        model = ManLearn.VAE_3D(fc_h = [3, 100],
+                                fc_g = [2, 100, 3],
+                                fc_mu = [100, 2],
+                                fc_var = [100, 2],
+                                fc_h_act = [nn.GELU],
+                                fc_g_act = [nn.GELU, nn.Identity],
+                                fc_mu_act = [nn.Identity],
+                                fc_var_act = [nn.Sigmoid],
+                                device=args.device).to(args.device)
+        data_path = 'Data/paraboloid/data.csv'
+        model_path = ''.join(('models/', 'paraboloid/params.pt'))
+        dataset, trainloader = ManLearn.load_surface(data_path,
+                                                     batch_size=args.batch_size,
+                                                     workers=args.workers,
+                                                     device=args.device)
+    elif args.model == "S2":
+        model = ManLearn.VAE_3D(fc_h = [3, 100],
+                                fc_g = [2, 100, 3],
+                                fc_mu = [100, 2],
+                                fc_var = [100, 2],
+                                fc_h_act = [nn.GELU],
+                                fc_g_act = [nn.GELU, nn.Identity],
+                                fc_mu_act = [nn.Identity],
+                                fc_var_act = [nn.Sigmoid],
+                                device=args.device).to(args.device)
+        data_path = 'Data/S2/data.csv'
+        model_path = ''.join(('models/', 'S2/params.pt'))
+        dataset, trainloader = ManLearn.load_surface(data_path,
+                                                     batch_size=args.batch_size,
+                                                     workers=args.workers,
+                                                     device=args.device)
         
     N = len(trainloader.dataset)
 
@@ -134,7 +231,10 @@ def main():
         running_loss_kld = 0.0
         for x in trainloader:
             #x = x.to(args.device) #If DATA is not saved to device
-            dat = x[0].to(args.device)
+            if type(x) == list:
+                dat = x[0].to(args.device)
+            else:
+                dat = x.to(args.device)
             _, x_hat, mu, var, kld, rec_loss, elbo = model(dat)
             optimizer.zero_grad() #optimizer.zero_grad(set_to_none=True) #Based on performance tuning
             elbo.backward()

@@ -99,3 +99,25 @@ def load_mnist(path:str,
     
     return dataset, dataset_subset, trainloader
 
+#%% Load surface data
+
+def load_surface(path:str,
+                 batch_size:int=100,
+                 workers:int=0,
+                 device='cpu'):
+    
+    df = pd.read_csv(path, index_col=0)
+    DATA = torch.Tensor(df.values).to(device) #DATA = torch.Tensor(df.values)
+    DATA = torch.transpose(DATA, 0, 1)
+
+    if device == 'cpu':
+        trainloader = DataLoader(dataset = DATA, batch_size= batch_size,
+                                 shuffle = True, pin_memory=True, num_workers = workers)
+    else:
+        trainloader = DataLoader(dataset = DATA, batch_size= batch_size,
+                                 shuffle = True)
+        
+    return DATA, trainloader
+
+
+
